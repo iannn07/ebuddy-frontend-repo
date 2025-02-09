@@ -4,17 +4,20 @@ import { getAuthCookies } from '@/utils/getAuthCookies'
 import { redirect } from 'next/navigation'
 import { ebuddyBEClient } from '../api'
 
-export const getAllEbuddyUsers = async () => {
+async function getEbuddyUser(id?: string) {
   try {
     const currentUserToken = await getAuthCookies()
 
     if (!currentUserToken) redirect('/auth/login')
 
-    const response = await ebuddyBEClient.get('/fetch-all-user-data', {
-      data: {
-        token: currentUserToken.value,
-      },
-    })
+    const response = await ebuddyBEClient.get(
+      id ? `/fetch-user-data/${id}` : 'fetch-all-user-data',
+      {
+        data: {
+          token: currentUserToken.value,
+        },
+      }
+    )
 
     if (response.status !== 200) {
       console.log('Failed to fetch user data')
@@ -28,4 +31,12 @@ export const getAllEbuddyUsers = async () => {
 
     return { data: null, error }
   }
+}
+
+export const getAllEbuddyUsers = async () => {
+  return getEbuddyUser()
+}
+
+export const getSingleEbuddyUser = async (id: string) => {
+  return getEbuddyUser(id)
 }

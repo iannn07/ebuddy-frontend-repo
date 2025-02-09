@@ -29,6 +29,9 @@ export async function middleware(request: NextRequest) {
   if (token && isAuthPage(pathname))
     return NextResponse.redirect(new URL('/home', request.url))
 
+  if (token && pathname === '/home/user')
+    return NextResponse.redirect(new URL('/home', request.url))
+
   return NextResponse.next()
 }
 

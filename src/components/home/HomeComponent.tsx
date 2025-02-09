@@ -2,10 +2,17 @@
 
 import { auth } from '@/app/_firebase/config'
 import { USER } from '@/types/user'
-import { Button, Card, CardContent, CardHeader, Container } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Typography,
+} from '@mui/material'
 import { signOut } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
-import UserCardComponent from '../custom/UserCardComponent'
+import UserCardComponent from './UserCardComponent'
 
 interface HomeComponentProps {
   allUsers: USER[] | null
@@ -30,9 +37,13 @@ function HomeComponent({ allUsers }: HomeComponentProps) {
       <Card className='p-5 w-full max-w-5xl rounded-xl h-full'>
         <CardHeader title='User List' />
         <CardContent className='flex flex-col md:grid md:grid-cols-2 gap-5 w-full'>
-          {allUsers?.map((user) => (
-            <UserCardComponent key={user.id} user={user} />
-          ))}
+          {allUsers ? (
+            allUsers.map((user) => (
+              <UserCardComponent key={user.id} user={user} />
+            ))
+          ) : (
+            <Typography variant='h1'>No users found</Typography>
+          )}
         </CardContent>
       </Card>
 

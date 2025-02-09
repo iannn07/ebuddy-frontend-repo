@@ -1,15 +1,17 @@
+import UserDetailComponent from '@/components/home/user-details/UserDetailComponent'
+import { fetchSingleUserAction } from './utils/fetchSingleUserAction'
+
 interface UserDetailPageProps {
-  searchParams: {
+  params: {
     id: string
   }
 }
 
-function UserDetailPage({ searchParams }: UserDetailPageProps) {
-  const { id } = searchParams
+async function UserDetailPage({ params }: UserDetailPageProps) {
+  const resolvedParams = await Promise.resolve(params)
+  const user = await fetchSingleUserAction(resolvedParams.id)
 
-  console.log('id', id)
-
-  return <div>UserDetailPage</div>
+  return <UserDetailComponent user={user.data} />
 }
 
 export default UserDetailPage
