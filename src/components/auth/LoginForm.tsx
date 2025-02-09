@@ -1,7 +1,12 @@
 'use client'
 
 import { loginAction } from '@/app/auth/login/utils/loginAction'
-import { loginFailure, loginStart, resetError } from '@/store/slices/authSlices'
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+  resetError,
+} from '@/store/slices/authSlices'
 import { AppDispatch, RootState } from '@/store/store'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -98,6 +103,7 @@ function LoginForm() {
       }
 
       router.replace('/home')
+      dispatch(loginSuccess())
     } catch (error) {
       dispatch(
         loginFailure(

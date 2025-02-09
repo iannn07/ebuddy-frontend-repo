@@ -2,7 +2,7 @@ export type USER = {
   id: string
   email: string
   username: string
-  sales: number
+  balance: number
   purchases: number
   sector: string[]
 }

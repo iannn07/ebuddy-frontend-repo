@@ -1,22 +1,10 @@
 'use server'
 
 import { ebuddyBEClient } from '@/apis/api'
-import { checkEbuddyBEStatus } from '@/apis/status'
 import { cookies } from 'next/headers'
 
 export const validateToken = async (token: string) => {
   try {
-    const { success: status, error: statusError } = await checkEbuddyBEStatus()
-
-    if (!status) {
-      console.log('EBuddy Backend is down')
-
-      return {
-        success: false,
-        error: statusError,
-      }
-    }
-
     const response = await ebuddyBEClient.post('/auth/login', {
       token,
       headers: {
@@ -39,7 +27,6 @@ export const validateToken = async (token: string) => {
     const cookieStore = await cookies()
 
     cookieStore.set('fb-principal-iris-token', response.data.token, {
-      httpOnly: true,
       secure: true,
       sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 30,
