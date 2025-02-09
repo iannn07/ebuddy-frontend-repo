@@ -1,7 +1,6 @@
 import DefaultLayout from '@/layout/DefaultLayout'
 import { theme } from '@/theme/theme'
 import { ThemeProvider } from '@mui/material'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
@@ -29,11 +28,9 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} antialiased min-h-screen`}
         suppressHydrationWarning
       >
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <DefaultLayout>{children}</DefaultLayout>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <ThemeProvider theme={theme}>
+          <DefaultLayout>{children}</DefaultLayout>
+        </ThemeProvider>
       </body>
     </html>
   )
