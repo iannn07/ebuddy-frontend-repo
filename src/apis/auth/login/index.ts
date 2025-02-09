@@ -37,7 +37,13 @@ export const validateToken = async (token: string) => {
     console.log('Token validated successfully')
 
     const cookieStore = await cookies()
-    cookieStore.set('fb-principal-iris-token', response.data.token)
+
+    cookieStore.set('fb-principal-iris-token', response.data.token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 30,
+    })
 
     console.log('Token stored in cookie')
 

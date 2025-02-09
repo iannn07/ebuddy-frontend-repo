@@ -1,7 +1,10 @@
-import { Button } from '@mui/material'
+import HomeComponent from '@/components/home/HomeComponent'
+import { fetchUserAction } from './utils/fetchUserAction'
 
-function HomePage() {
-  return <Button variant='contained'>Test</Button>
+async function HomePage() {
+  const allUsers = await fetchUserAction()
+
+  return <HomeComponent allUsers={allUsers.data} />
 }
 
 export default HomePage

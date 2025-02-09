@@ -52,7 +52,7 @@ export async function loginAction(email: string, password: string) {
 
     return {
       success: false,
-      error,
+      error: (error as { code: string }).code,
     }
   }
 }
