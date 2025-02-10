@@ -1,16 +1,14 @@
 import { USER } from '@/types/user'
 import { Close } from '@mui/icons-material'
 import {
-  Button,
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
   IconButton,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import EditUserFormComponent from './EditUserFormComponent'
 
 interface EditUserModalComponentProps {
   open: boolean
@@ -34,8 +32,8 @@ function EditUserModalComponent({
       fullWidth
       disableEscapeKeyDown
     >
-      <DialogTitle className='flex justify-between items-center pb-4'>
-        <Typography variant={isSmallScreen ? 'h5' : 'h4'}>
+      <DialogTitle className='flex justify-between items-center'>
+        <Typography variant={isSmallScreen ? 'h5' : 'h4'} component='div'>
           Edit User Data
         </Typography>
         <IconButton onClick={handleClose} color='primary'>
@@ -43,20 +41,7 @@ function EditUserModalComponent({
         </IconButton>
       </DialogTitle>
 
-      <DialogContent>
-        <Typography variant='body1'>
-          Are you sure you want to delete user {user.username}?
-        </Typography>
-      </DialogContent>
-
-      <DialogActions>
-        <Button onClick={handleClose} color='secondary' variant='outlined'>
-          Cancel
-        </Button>
-        <Button onClick={handleClose} color='primary' variant='contained'>
-          Delete
-        </Button>
-      </DialogActions>
+      <EditUserFormComponent user={user} handleClose={handleClose} />
     </Dialog>
   )
 }

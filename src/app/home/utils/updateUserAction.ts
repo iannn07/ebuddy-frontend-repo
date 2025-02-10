@@ -4,9 +4,9 @@ import { updateEbuddyUser } from '@/apis/user'
 import { USER } from '@/types/user'
 import { revalidatePath } from 'next/cache'
 
-export async function updateUserAction(id: string, data: USER) {
+export async function updateUserAction(data: USER) {
   try {
-    const { success, error } = await updateEbuddyUser(id, data)
+    const { success, error } = await updateEbuddyUser(data.id, data)
 
     if (!success || error) {
       console.log('Failed to update user data')

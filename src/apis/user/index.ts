@@ -68,11 +68,9 @@ export async function updateEbuddyUser(id: string, data: USER) {
 
     if (!currentUserToken) redirect('/auth/login')
 
-    const response = await ebuddyBEClient.post(`/update-user/${id}`, {
-      data: {
-        token: currentUserToken.value,
-        data,
-      },
+    const response = await ebuddyBEClient.post(`/update-user-data/${id}`, {
+      token: currentUserToken.value,
+      data,
     })
 
     if (response.status !== 200) {

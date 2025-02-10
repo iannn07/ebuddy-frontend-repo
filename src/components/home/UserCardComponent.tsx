@@ -59,7 +59,7 @@ function UserCardComponent({ user }: UserCardComponentProps) {
               <Chip
                 key={index}
                 label={sec.toUpperCase()}
-                variant={isSmallScreen ? 'filled' : 'outlined'}
+                variant='filled'
                 className='border border-primary'
                 color='primary'
               />
