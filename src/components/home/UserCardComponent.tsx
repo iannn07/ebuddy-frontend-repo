@@ -6,8 +6,11 @@ import {
   CardHeader,
   Chip,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
-import Link from 'next/link'
+import { useState } from 'react'
+import EditUserModalComponent from '../modal/EditUserModalComponent'
 
 interface UserCardComponentProps {
   user: USER
@@ -15,7 +18,7 @@ interface UserCardComponentProps {
 
 const renderUserData = (user: USER) => {
   return (
-    <Box className='grid grid-cols-2 text-left'>
+    <Box className='md:grid md:grid-cols-2 md:text-left text-center'>
       <Box className='hidden md:block'>
         <Typography variant='body1'>Email</Typography>
         <Typography variant='body1'>Purchases</Typography>
@@ -31,18 +34,32 @@ const renderUserData = (user: USER) => {
 }
 
 function UserCardComponent({ user }: UserCardComponentProps) {
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const [openDialog, setOpenDialog] = useState(false)
+  const handleOpenDialog = () => setOpenDialog(true)
+  const handleCloseDialog = () => setOpenDialog(false)
+
   return (
-    <Link href={`/home/user/${user.id}`}>
-      <Card className='p-4 w-full rounded-xl border border-primary hover:shadow-xl hover:scale-105 transition-all ease-in-out text-center cursor-pointer active:scale-100'>
-        <CardHeader className='text-lg font-bold' title={user.username} />
+    <>
+      <Card
+        className='p-4 w-full rounded-xl border border-primary hover:shadow-xl hover:scale-105 transition-all ease-in-out text-center cursor-pointer active:scale-100'
+        onClick={handleOpenDialog}
+      >
+        <CardHeader
+          className='text-lg font-bold'
+          title={user.username.toUpperCase()}
+          titleTypographyProps={{ variant: isSmallScreen ? 'h5' : 'h4' }}
+        />
         <CardContent className='w-full'>
           {renderUserData(user)}
           <Box className='flex flex-wrap justify-center gap-2 mt-4'>
             {user.sector.map((sec, index) => (
               <Chip
                 key={index}
-                label={sec}
-                variant='outlined'
+                label={sec.toUpperCase()}
+                variant={isSmallScreen ? 'filled' : 'outlined'}
                 className='border border-primary'
                 color='primary'
               />
@@ -50,7 +67,13 @@ function UserCardComponent({ user }: UserCardComponentProps) {
           </Box>
         </CardContent>
       </Card>
-    </Link>
+
+      <EditUserModalComponent
+        open={openDialog}
+        handleClose={handleCloseDialog}
+        user={user}
+      />
+    </>
   )
 }
 

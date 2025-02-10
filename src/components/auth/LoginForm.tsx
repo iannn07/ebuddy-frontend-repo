@@ -103,7 +103,10 @@ function LoginForm() {
       }
 
       router.replace('/home')
-      dispatch(loginSuccess())
+
+      setTimeout(() => {
+        dispatch(loginSuccess())
+      }, 1000)
     } catch (error) {
       dispatch(
         loginFailure(

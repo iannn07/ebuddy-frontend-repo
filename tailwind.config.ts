@@ -15,6 +15,10 @@ export default {
         error: '#d62828',
         info: '#5aa9e6',
         warning: '#f77f00',
+        muiBackground: {
+          paper: '#19212c',
+          default: '#11161e',
+        },
       },
     },
   },

@@ -35,7 +35,10 @@ function HomeComponent({ allUsers }: HomeComponentProps) {
   return (
     <Container className='flex flex-col items-center justify-center min-h-screen py-10 gap-10'>
       <Card className='p-5 w-full max-w-5xl rounded-xl h-full'>
-        <CardHeader title='User List' />
+        <CardHeader
+          title='User List'
+          subheader='List of all users. Click on a user to edit their details'
+        />
         <CardContent className='flex flex-col md:grid md:grid-cols-2 gap-5 w-full'>
           {allUsers ? (
             allUsers.map((user) => (
