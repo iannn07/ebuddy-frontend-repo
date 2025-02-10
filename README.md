@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# README
 
-## Getting Started
+## Frontend System for EBuddy Test
 
-First, run the development server:
+### Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+public
+└───src
+    ├───apis
+    │   ├───auth
+    │   │   └───login
+    │   └───user
+    ├───app
+    │   ├───auth
+    │   │   └───login
+    │   │       └───utils
+    │   ├───home
+    │   │   └───utils
+    │   └───_firebase
+    ├───components
+    │   ├───auth
+    │   ├───home
+    │   └───modal
+    ├───layout
+    ├───store
+    │   └───slices
+    ├───theme
+    ├───types
+    └───utils
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Folder       | Description                                                                                                                                                        |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `apis`       | This folder used to handle all API call to the backend                                                                                                             |
+| `apis/auth`  | Handles the Login Authentication and set the `idToken` to the Cookie                                                                                               |
+| `apis/user`  | Handles all CRU operations within the application. Including fetch all, fetch single, and update user                                                              |
+| `app`        | All Server Actions and `page.tsx` files of the project (routing). This folder also includes the configuration of the Firebase which is stored in private directory |
+| `components` | All Atomic Copmonents used in the app. I use this folder to separate the Header, Form, and Card                                                                    |
+| `layout`     | Customised Layout for the Application                                                                                                                              |
+| `store`      | Redux Configuration                                                                                                                                                |
+| `theme`      | MUI Configuration                                                                                                                                                  |
+| `types`      | Entities used in the Backend                                                                                                                                       |
+| `utils`      | Extra utils for me to get the token stored in the browser                                                                                                          |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Middleware & Auth Schema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+At the first render, the app will check the middleware and check the current state of the user by inspecting their current path. If they're inside of the protected path, it'll automatically redirected to the `auth/login`
 
-## Learn More
+The following is the application schema with the backend for the authentication
 
-To learn more about Next.js, take a look at the following resources:
+![Auth Schema](<public/Auth Schema.png>)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This schema starts with:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. The user asks for the `idToken` (Login to Firebase Authentication)
+2. Firebase gives the user the `idToken`
+3. The `idToken` needs to be verified first before it's used as the Browser's Cookie
+4. The user send the `idToken` to Backend to validate the token
+5. The backend will validate it by sending the token to Firebase to ensure the token is a valid token
+6. After validate it, the `idToken` will be returned to the user
+7. The validated `idToken` is stored on the Cookie
+8. User can access `/home`
 
-## Deploy on Vercel
+### App Screenshots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Homepage](public/1.png)
+![Update Data](public/2.png)
+![Updated Data](public/3.png)
+![Updates in Firestore](public/4.png)
